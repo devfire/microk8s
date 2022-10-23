@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 for node in node1 node2 node3;do
   echo launching $node
   multipass launch -n $node
@@ -27,7 +29,7 @@ multipass exec node1 sudo cat /etc/rancher/k3s/k3s.yaml > k3s.yaml
 # Set node1's external IP in the configuration file
 sed -i "s/127.0.0.1/$IP/" k3s.yaml
 
-# We'r all set
+# It's done.
 echo
 echo "K3s cluster is ready !"
 echo
