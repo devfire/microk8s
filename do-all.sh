@@ -21,6 +21,7 @@ Do() {
     for node in $(multipass list | grep Ubuntu | awk '{print $1}'); do
          multipass $action $node
     done
+    multipass purge
 }
 
 ############################################################
