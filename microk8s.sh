@@ -14,7 +14,7 @@ for node in node2 node3; do
 done
 
 echo enable dns rbac
-multipass exec node1 -- bash -c "microk8s enable dns rbac"
+multipass exec node1 -- bash -c "microk8s enable dns rbac istio"
 
 
 echo writing the config file
