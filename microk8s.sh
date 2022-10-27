@@ -1,6 +1,6 @@
 for node in node1 node2 node3;do
   echo launching $node
-  multipass launch -n $node -m 2G
+  multipass launch -n $node -d 10G -m 2G
   echo install k8s
   multipass exec $node -- bash -c "sudo snap install microk8s --classic"
   multipass exec $node -- bash -c "sudo usermod -a -G microk8s ubuntu"
@@ -13,7 +13,7 @@ for node in node2 node3; do
    multipass exec $node -- bash -c "$joincommand"
 done
 
-echo enable dns rbac
+echo enable dns rbac storage
 multipass exec node1 -- bash -c "microk8s enable dns rbac hostpath-storage"
 
 
