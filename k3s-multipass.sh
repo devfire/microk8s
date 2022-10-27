@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+TOKEN=12345
+
 for node in node1 node2 node3;do
   echo launching $node
   multipass launch -n $node
@@ -7,14 +9,15 @@ done
 
 # Init cluster on node1
 echo init cluster
-multipass exec node1 -- bash -c "curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE=\"644\" INSTALL_K3S_EXEC=\"--flannel-backend=none --cluster-cidr=192.168.0.0/16 --disable-network-policy --disable=traefik\" sh -"
+#multipass exec node1 -- bash -c "curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE=\"644\" INSTALL_K3S_EXEC=\"--flannel-backend=none --cluster-cidr=192.168.0.0/16 --disable-network-policy --disable=traefik\" sh -"
+multipass exec node1 -- bash -c "curl -sfL https://get.k3s.io | K3S_TOKEN=$TOKEN sh -s - server --flannel-backend none"
 
 # Get node1's IP
 IP=$(multipass info node1 | grep IPv4 | awk '{print $2}')
 echo master node ip is $IP
 
 # Get Token used to join nodes
-TOKEN=$(multipass exec node1 sudo cat /var/lib/rancher/k3s/server/node-token)
+#TOKEN=$(multipass exec node1 sudo cat /var/lib/rancher/k3s/server/node-token)
 
 for node in node2 node3; do
 	echo joining $node
